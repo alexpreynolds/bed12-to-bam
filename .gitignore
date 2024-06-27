@@ -128,3 +128,13 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+*.bed
+*.bed12
+*.gz
+*.sam
+*.bam
+*.bai
+*.err
+*.out
+*~
