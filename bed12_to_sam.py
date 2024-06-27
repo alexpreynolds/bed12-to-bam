@@ -5,6 +5,7 @@ import json
 
 in_fn = sys.argv[1]
 out_fn = sys.argv[2]
+default_element_rgb = sys.argv[3] if len(sys.argv) >= 3 else '0,0,0'
 
 #
 # https://stackoverflow.com/a/70154903/19410
@@ -172,16 +173,17 @@ with open(out_fn, 'w') as out_fh:
                 'chrom': elems[0],
                 'chromStart': int(elems[1]),
                 'chromEnd': int(elems[2]),
-                'name': elems[3],
-                'score': int(elems[4]),
-                'strand': elems[5],
-                'thickStart': int(elems[6]),
-                'thickEnd': int(elems[7]),
-                'itemRgb': elems[8],
-                'blockCount': int(elems[9]),
-                'blockSizes': elems[10],
-                'blockStarts': elems[11],
             }
+            line['name'] = elems[3] if len(elems[3]) >= 4 else '.'
+            line['score'] = int(elems[4]) if len(elems[4]) >= 5 else 0
+            line['strand'] = elems[5] if len(elems[5]) >= 6 else '.'
+            line['thickStart'] = int(elems[6]) if len(elems[6]) >= 7 else int(elems[1])
+            line['thickEnd'] = int(elems[7]) if len(elems[7]) >= 8 else int(elems[2])
+            line['itemRgb'] = elems[8] if len(elems[8]) >= 9 else default_element_rgb
+            line['blockCount'] = int(elems[9]) if len(elems[9]) >= 10 else str(1)
+            line['blockSizes'] = elems[10] if len(elems[10]) >= 11 else str(int(elems[2]) - int(elems[1]))
+            line['blockStarts'] = elems[11] if len(elems[11]) >= 12 else str(0)
+
             opt_co_obj = {
                 'rec': {'id':line['name'], 'score':line['score']},
                 'rgb': line['itemRgb'],
